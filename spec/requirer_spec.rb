@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# add directory to load_path where test files to load exist
 $LOAD_PATH.unshift 'spec/dirs_to_require'
 
 describe Requirer do
