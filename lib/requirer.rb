@@ -1,8 +1,8 @@
 require "requirer/version"
 
-class DirUtilsException < StandardError ; end
-
 module Requirer
+  class DirUtilsException < StandardError ; end
+
   def dir_tree(path)
     # "dir_tree #{path}".logit
     path = find_dir_with(path, $LOAD_PATH)

@@ -1,4 +1,3 @@
-warn 'in requirer_spec'
 require 'spec_helper'
 
 $LOAD_PATH.unshift 'spec/dirs_to_require'
