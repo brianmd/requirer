@@ -1,4 +1,4 @@
-require "requirer/version"
+require_relative "requirer/version"
 
 module Requirer
   class DirUtilsException < StandardError ; end
