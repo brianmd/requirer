@@ -3,7 +3,7 @@ require_relative "requirer/version"
 module Requirer
   class DirUtilsException < StandardError ; end
 
-  def dir_tree(path)
+  def require_dir_tree(path)
     # "dir_tree #{path}".logit
     path = find_dir_with(path, $LOAD_PATH)
     on_dir_tree(path) do |dir_path|
@@ -21,7 +21,7 @@ module Requirer
     return nil unless path
 
     # "requiring_absolute_dir #{path}".logit
-    Dir["#{path}/[^_]*.rb"].each do |file|
+    Dir["#{path}/[^_]*.rb"].sort.each do |file|
       next unless File.file?(file)
       # "requiring #{file}".logit
       require file
@@ -29,24 +29,27 @@ module Requirer
   end
 
   def find_dir_with(path, search_dirs=$LOAD_PATH)
-    raise DirUtilsException.new("No such path: #{path}") unless path
+    fail DirUtilsException.new("No such path: #{path}") unless path
     path = path.to_s
     return path if path[0]=='/'
     search_dirs.each do |dir|
       dirname = File.expand_path(path, dir)
       return dirname if File.directory?(dirname)
     end
-    raise DirUtilsException.new("No such path: #{path}")
+    fail DirUtilsException.new("No such path: #{path}")
   end
 
   def find_file_with(path, search_dirs=$LOAD_PATH)
-    raise DirUtilsException.new("No such path: #{path}") unless path
-    return path if path[0]=='/'
+    fail DirUtilsException.new("No such path: #{path}") unless path
+    if path[0]=='/'
+      fail DirUtilsException.new("No such path: #{path}") unless File.exists?(path)
+      return path
+    end
     search_dirs.each do |dir|
       filename = File.expand_path(path, dir)
       return filename if File.file?(filename)
     end
-    raise DirUtilsException.new("No such path: #{path}")
+    fail DirUtilsException.new("No such path: #{path}")
   end
 
   def where_is?(path)

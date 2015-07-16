@@ -1,1 +1,1 @@
-$bucket << 'depth_one(2)'
+$bucket << 'depth_one(3)'
