@@ -50,7 +50,19 @@ describe Requirer do
       expect(where_is?('dir_depth_1/depth1.rb').split('/')[-2]).to eq('dir_depth_1')
     end
 
-    it 'raises error on bad path' do
+    it 'finds file with directory as part of the requested path' do
+      filename = File.expand_path("../dirs_to_require/dir_depth_1/depth1.rb", __FILE__)
+      found_filename = where_is?(filename)
+      expect(found_filename[0]).to eq('/')
+      expect(found_filename.split('/').last).to eq('depth1.rb')
+      expect(found_filename.split('/')[-2]).to eq('dir_depth_1')
+    end
+
+    it 'raises error on bad  path' do
+      expect{ where_is?('asdf') }.to raise_error(DirUtilsException)
+    end
+
+    it 'raises error on bad absolute path' do
       expect{ where_is?('/asdf') }.to raise_error(DirUtilsException)
     end
   end
