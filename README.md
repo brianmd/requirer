@@ -1,3 +1,11 @@
+[![Build Status](https://api.travis-ci.org/brianmd/requirer.png?branch=master)](https://travis-ci.org/brianmd/requirer) 
+
+[![Gem Version](https://badge.fury.io/rb/requirer.png)](http://badge.fury.io/rb/requirer)
+
+[![Coverage Status](https://coveralls.io/repos/brianmd/requirer/badge.png)](https://coveralls.io/r/brianmd/requirer)
+
+[![Coverage Status](https://coveralls.io/repos/brianmd/requirer/badge.svg?branch=master&service=github)](https://coveralls.io/github/brianmd/requirer?branch=master)
+
 # Requirer
 
 - Perform #require on every ruby file in a directory.
