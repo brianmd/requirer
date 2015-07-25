@@ -1,10 +1,22 @@
 require_relative "requirer/version"
 
 module Requirer
+  module_function
+
+  class << self
+    attr_writer :logger
+
+    def logger
+      @logger ||= Logger.new($stdout).tap do |log|
+        log.progname = self.name
+      end
+    end
+  end
+
   class DirUtilsException < StandardError ; end
 
   def require_dir_tree(path)
-    # "dir_tree #{path}".logit
+    Requirer.logger.debug "dir_tree #{path}"
     path = find_dir_with(path, $LOAD_PATH)
     on_dir_tree(path) do |dir_path|
       require_absolute_dir dir_path
@@ -12,7 +24,7 @@ module Requirer
   end
 
   def require_dir(path)
-    # "require_dir #{path}".logit
+    Requirer.logger.debug "require_dir:#{path}:"
     require_absolute_dir find_dir_with(path, $LOAD_PATH)
   end
 
@@ -20,10 +32,10 @@ module Requirer
   def require_absolute_dir(path)
     return nil unless path
 
-    # "requiring_absolute_dir #{path}".logit
+    Requirer.logger.debug "requiring absolute dir:#{path}:"
     Dir["#{path}/[^_]*.rb"].sort.each do |file|
       next unless File.file?(file)
-      # "requiring #{file}".logit
+      Requirer.logger.debug "requiring file:#{file}:"
       require file
     end
   end
