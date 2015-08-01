@@ -1,5 +1,7 @@
 require_relative "requirer/version"
 
+alias :require_dependency :require unless Kernel.respond_to?(:require_dependency)
+
 module Requirer
   module_function
 
@@ -36,7 +38,7 @@ module Requirer
     Dir["#{path}/[^_]*.rb"].sort.each do |file|
       next unless File.file?(file)
       Requirer.logger.debug "requiring file:#{file}:"
-      require file
+      require_dependency file
     end
   end
 
