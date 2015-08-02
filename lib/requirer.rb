@@ -1,4 +1,5 @@
 require_relative "requirer/version"
+require 'logger'
 
 alias :require_dependency :require unless Kernel.respond_to?(:require_dependency)
 
